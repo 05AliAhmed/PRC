@@ -28,12 +28,20 @@ AHeroCharacter::AHeroCharacter()
     GetCharacterMovement()->bOrientRotationToMovement = true;
     GetCharacterMovement()->RotationRate = FRotator(0.f, 500.f, 0.f);
 
+    HealthComp = CreateDefaultSubobject<URealHealthComponent>(TEXT("HealthComp"));
+    StatComp = CreateDefaultSubobject<UStatComponent>(TEXT("StatComp"));
 }
 
 // Called when the game starts or when spawned
 void AHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+    if (IsLocallyControlled() && HUDWidgetClass)
+    {
+        APlayerController* PC = Cast<APlayerController>(GetController());
+        HUDInstance = CreateWidget<UPlayerHUD>(PC, HUDWidgetClass);
+        if (HUDInstance) HUDInstance->AddToViewport();
+    }
     if (APlayerController* PC = Cast<APlayerController>(Controller))
     {
         if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
@@ -42,6 +50,21 @@ void AHeroCharacter::BeginPlay()
             Subsystem->AddMappingContext(DefaultMappingContext, 0);
         }
     }
+    // Apply speed multiplier from StatComp once at spawn
+    if (StatComp && GetCharacterMovement())
+        GetCharacterMovement()->MaxWalkSpeed *= StatComp->MoveSpeedMultiplier;
+
+    if (APlayerController* PC = Cast<APlayerController>(GetController()))
+    {
+        if (UEnhancedInputLocalPlayerSubsystem* Sub =
+            ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
+                PC->GetLocalPlayer()))
+        {
+            Sub->AddMappingContext(DefaultMappingContext, 0);
+        }
+    }
+
+
 
 }
 
@@ -64,7 +87,23 @@ void AHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
         EIC->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
         //EIC->BindAction(DodgeAction, ETriggerEvent::Started, this, &AHeroCharacter::Dodge);
     }
+
+    if (UEnhancedInputComponent* EIC =
+        Cast<UEnhancedInputComponent>(PlayerInputComponent))
+    {
+        EIC->BindAction(IA_TestDamage, ETriggerEvent::Started,
+            this, &AHeroCharacter::OnTestDamage);
+    }
+
+
+
 }
+
+void AHeroCharacter::OnTestDamage(const FInputActionValue&)
+{
+    if (HealthComp) HealthComp->TakeDamage(25.f);
+}
+
 void AHeroCharacter::Move(const FInputActionValue& Value)
 {
     const FVector2D MoveInput = Value.Get<FVector2D>();

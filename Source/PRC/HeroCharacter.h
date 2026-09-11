@@ -4,9 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "RealHealthComponent.h"
+#include "StatComponent.h"
+#include "PlayerHUD.h"
+#include "InputAction.h"
+#include "InputActionValue.h"
 #include "HeroCharacter.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCollectibleCountChanged, int32, NewCount);
+
 
 UCLASS()
 class PRC_API AHeroCharacter : public ACharacter
@@ -75,6 +80,31 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Collectibles")
 	void AddCollectible();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<URealHealthComponent> HealthComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UStatComponent> StatComp;
+
+	UPROPERTY(EditDefaultsOnly, Category = "HUD")
+	TSubclassOf<UPlayerHUD> HUDWidgetClass;
+
+	UPROPERTY()
+	TObjectPtr<UPlayerHUD> HUDInstance;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_TestDamage;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_Attack;
+
+	void OnTestDamage(const FInputActionValue& Value);
+
+
+
+
+
 
 private:
 	int32 CollectibleCount = 0;
