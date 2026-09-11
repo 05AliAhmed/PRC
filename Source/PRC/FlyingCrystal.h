@@ -40,7 +40,7 @@ public:
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 		bool bFromSweep, const FHitResult& SweepResult);
 
-	void Collect(class AHeroCharacter* Collector);
+	//void Collect(class AHeroCharacter* Collector);
 
 private:
 	float RunningTime = 0.0f;
