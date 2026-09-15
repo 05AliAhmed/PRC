@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "HealthComponent.h"
-#include "StatComponent.h"
+//#include "StatComponent.h"
 #include "EnemyCharacter.generated.h"
 
 UCLASS()
@@ -22,10 +22,10 @@ public:
 	float CurrentHP = 100.f;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Stats")
 	float AttackDamage = 15.f;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TObjectPtr<UHealthComponent> HealthComp;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TObjectPtr<UStatComponent> StatComp;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	//TObjectPtr<UHealthComponent> HealthComp;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	//TObjectPtr<UStatComponent> StatComp;
 
 protected:
 	// Called when the game starts or when spawned
