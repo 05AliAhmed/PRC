@@ -5,6 +5,7 @@
 
 void UPlayerHUD::NativeConstruct()
 {
-    Super::NativeConstruct();
-    // Delegate binding is in WBP_PlayerHUD Event Graph
+	Super::NativeConstruct();
+	//Delegate binding is in WBP event graph
 }
+

@@ -15,14 +15,13 @@ UCLASS()
 class PRC_API UPlayerHUD : public UUserWidget
 {
 	GENERATED_BODY()
-
 public:
-    UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-    TObjectPtr<UProgressBar> HB_HealthBar;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	TObjectPtr<UProgressBar> HB_HealthBar;
 
-    UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-    TObjectPtr<UTextBlock> TB_CrystalCount;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	TObjectPtr<UTextBlock> TB_CrystalCount;
+
 protected:
-    virtual void NativeConstruct() override;
-	
+	virtual void NativeConstruct() override;
 };

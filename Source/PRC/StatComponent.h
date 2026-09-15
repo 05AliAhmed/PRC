@@ -16,15 +16,18 @@ class PRC_API UStatComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UStatComponent();
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="Stats")
 	float MoveSpeedMultiplier = 1.f;
+
 	UPROPERTY(BlueprintReadOnly)
 	int32 CollectibleCount = 0;
+
 	UPROPERTY(BlueprintAssignable)
 	FOnCollectibleCountChanged OnCollectibleCountChanged;
+
 	float GetMoveSpeed(float BaseSpeed) const;
 	void AddCollectible(int32 Amount = 1);
-
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

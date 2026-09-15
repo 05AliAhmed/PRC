@@ -13,15 +13,6 @@ UStatComponent::UStatComponent()
 	// ...
 }
 
-
-// Called when the game starts
-void UStatComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	
-}
-
 float UStatComponent::GetMoveSpeed(float BaseSpeed) const
 {
 	return BaseSpeed * MoveSpeedMultiplier;
@@ -30,7 +21,15 @@ float UStatComponent::GetMoveSpeed(float BaseSpeed) const
 void UStatComponent::AddCollectible(int32 Amount)
 {
 	CollectibleCount += Amount;
-	OnCollectibleCountChanged.Broadcast(CollectibleCount);
+}
+
+// Called when the game starts
+void UStatComponent::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// ...
+	
 }
 
 

@@ -8,15 +8,10 @@ AEnemyCharacter::AEnemyCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	HealthComp = CreateDefaultSubobject<URealHealthComponent>(TEXT("HealthComp"));
+	HealthComp = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
 	StatComp = CreateDefaultSubobject<UStatComponent>(TEXT("StatComp"));
 
-	// Tag so Blueprint sphere traces find enemies without a class cast
 	Tags.Add(FName("Enemy"));
-
-
-
 }
 
 // Called when the game starts or when spawned

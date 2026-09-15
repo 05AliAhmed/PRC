@@ -49,15 +49,15 @@ void AFlyingCrystal::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
     UE_LOG(LogTemp, Warning, TEXT("Overlap fired: %s"), *OtherActor->GetName());
     if (AHeroCharacter* Hero = Cast<AHeroCharacter>(OtherActor))
     {
-        Collect(Hero);
+        //Collect(Hero);
     }
 }
 
-void AFlyingCrystal::Collect(AHeroCharacter* Collector)
-{
-    Collector->AddCollectible();
-    UE_LOG(LogTemp, Warning, TEXT("Crystal collected!"));
-    Destroy();
-}
+//void AFlyingCrystal::Collect(AHeroCharacter* Collector)
+//{
+//  /*  Collector->AddCollectible();
+//    UE_LOG(LogTemp, Warning, TEXT("Crystal collected!"));
+//    Destroy();*/
+//}
 
 

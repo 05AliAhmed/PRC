@@ -3,25 +3,46 @@
 
 #include "HealthComponent.h"
 
-// Sets default values
-AHealthComponent::AHealthComponent()
+// Sets default values for this component's properties
+UHealthComponent::UHealthComponent()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+	// off to improve performance if you don't need them.
+	PrimaryComponentTick.bCanEverTick = true;
 
+	// ...
 }
 
-// Called when the game starts or when spawned
-void AHealthComponent::BeginPlay()
+
+// Called when the game starts
+void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	CurrentHealth = MaxHealth;
+	// ...
 	
 }
 
-// Called every frame
-void AHealthComponent::Tick(float DeltaTime)
+void UHealthComponent::TakeDamage(float Amount)
 {
-	Super::Tick(DeltaTime);
+	if (Amount <= 0.f) return;
+	CurrentHealth = FMath::Clamp(CurrentHealth - Amount, 0.f, MaxHealth);
+	OnHealthChanged.Broadcast(CurrentHealth);
+	if (CurrentHealth <= 0.f) OnPlayerDeath.Broadcast();
+}
 
+void UHealthComponent::Heal(float Amount)
+{
+	if (Amount <= 0.f) return;
+	CurrentHealth = FMath::Clamp(CurrentHealth + Amount, 0.f, MaxHealth);
+	OnHealthChanged.Broadcast(CurrentHealth);
+}
+
+// Called every frame
+void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	// ...
 }
 

@@ -16,10 +16,10 @@ public:
 	// Sets default values for this actor's properties
 	AWeaponBase();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Weapon")
 	TObjectPtr<UStaticMeshComponent> MeshComp;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Combat")
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Combat")
 	float Damage = 25.f;
 
 protected:

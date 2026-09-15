@@ -1,118 +1,49 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
-
-#include "CoreMinimal.h"
+#include  "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "RealHealthComponent.h"
-#include "StatComponent.h"
-#include "PlayerHUD.h"
-#include "InputAction.h"
-#include "InputActionValue.h"
 #include "HeroCharacter.generated.h"
 
-
+class USpringArmComponent;
+class UCameraComponent;
+class UInputMappingContext;
+class UInputAction;
 
 UCLASS()
 class PRC_API AHeroCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
 public:
-	// Sets default values for this character's properties
 	AHeroCharacter();
-
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void SetupPlayerInputComponent(UInputComponent* Input) override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
+	TObjectPtr<USpringArmComponent> SpringArm;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<class UInputMappingContext> DefaultMappingContext;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
+	TObjectPtr<UCameraComponent> Camera;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputMappingContext> DefaultMappingContext;
 
-	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<class UInputAction> MoveAction;
-	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<class UInputAction> LookAction;
-	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<class UInputAction> JumpAction;
-	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<class UInputAction> DodgeAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_Move;
 
-	UPROPERTY(EditAnywhere, Category = "Camera")
-	TObjectPtr<class USpringArmComponent> CameraBoom;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_Look;
 
-	UPROPERTY(EditAnywhere, Category = "Camera")
-	TObjectPtr<class UCameraComponent> FollowCamera;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_Jump;
 
-	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<class UInputMappingContext> KeyboardOnlyMappingContext;
-
-	virtual void Jump() override;
-	UPROPERTY(EditAnywhere, Category = "Movement|Bullet Jump")
-	float BulletJumpVelocityBoost = 600.0f;
-	UPROPERTY(EditAnywhere, Category = "Movement|Bullet Jump")
-	float BulletJumpAirControlBoost = 0.3f;
-
-	UFUNCTION(BlueprintCallable, Category = "Input")
-	void SetKeyboardOnlyMode(bool bEnable);
-
-	void Move(const struct FInputActionValue& Value);
-	void Look(const struct FInputActionValue& Value);
-	void Dodge(const struct FInputActionValue& Value);
-
-	UPROPERTY(EditAnywhere, Category = "Movement|Dodge")
-	float DodgeImpulse = 900.0f;
-	UPROPERTY(EditAnywhere, Category = "Movement|Dodge")
-	float IFrameDuration = 0.35f;
-	UPROPERTY(EditAnywhere, Category = "Movement|Dodge")
-	float DodgeCooldown = 0.6f;
-
-	bool bIsInvincible = false;
-
-	UPROPERTY(BlueprintAssignable, Category = "Collectibles")
-	FOnCollectibleCountChanged OnCollectibleCountChanged;
-
-	UFUNCTION(BlueprintCallable, Category = "Collectibles")
-	void AddCollectible();
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TObjectPtr<URealHealthComponent> HealthComp;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TObjectPtr<UStatComponent> StatComp;
-
-	UPROPERTY(EditDefaultsOnly, Category = "HUD")
-	TSubclassOf<UPlayerHUD> HUDWidgetClass;
-
-	UPROPERTY()
-	TObjectPtr<UPlayerHUD> HUDInstance;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Input")
-	TObjectPtr<UInputAction> IA_TestDamage;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Input")
-	TObjectPtr<UInputAction> IA_Attack;
-
-	void OnTestDamage(const FInputActionValue& Value);
-
-
-
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<class UInputAction> IA_Attack;
 
 
 private:
-	int32 CollectibleCount = 0;
-	bool bIsDodging = false;
-	FTimerHandle InvincibilityTimerHandle;
-	FTimerHandle DodgeCooldownTimerHandle;
-	void EndInvincibility();
-	void EndDodgeCooldown();
+	void Move(const struct FInputActionValue& Value);
+	void Look(const struct FInputActionValue& Value);
+
+
 
 
 };
