@@ -16,6 +16,12 @@ class PRC_API AEnemyCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AEnemyCharacter();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+	float MaxHP = 100.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Stats")
+	float CurrentHP = 100.f;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Stats")
+	float AttackDamage = 15.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UHealthComponent> HealthComp;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
