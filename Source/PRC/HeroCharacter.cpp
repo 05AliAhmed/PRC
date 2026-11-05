@@ -45,8 +45,8 @@ void AHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
     {
         EIC->BindAction(IA_Move, ETriggerEvent::Triggered, this, &AHeroCharacter::Move);
         EIC->BindAction(IA_Look, ETriggerEvent::Triggered, this, &AHeroCharacter::Look);
-        EIC->BindAction(IA_Jump, ETriggerEvent::Started, this, &ACharacter::Jump);
-        EIC->BindAction(IA_Jump, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+        //EIC->BindAction(IA_Jump, ETriggerEvent::Started, this, &ACharacter::Jump);
+        //EIC->BindAction(IA_Jump, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
     }
 }
 
